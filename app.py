@@ -61,9 +61,9 @@ def input_page():
     # Load and Reset buttons
     col1, col2 = st.columns(2)
     with col1:
-        if st.button('Load Data from YAML'):
+        if st.button('Load Dummy Data'):
             load_data_from_yaml()
-            st.success("Data loaded from YAML file")
+            st.success("Data loaded!")
             st.rerun()
 
     with col2:
@@ -169,7 +169,7 @@ def input_page():
         st.rerun()
 
 def calculation_page():
-    st.title('Financial Projections')
+    st.title('Retirement Savings and Corpus Projections')
 
     # Calculate years to retirement
     years_to_retirement = st.session_state.personal_info['retirement_age'] - st.session_state.personal_info['current_age']
