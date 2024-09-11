@@ -203,7 +203,7 @@ def calculation_page():
     st.plotly_chart(fig)
 
     # Expected returns
-    expected_return = st.slider('Expected Annual Return (%)', 
+    expected_return = st.slider('Expected Annual Return (%) on Savings', 
                                 min_value=0.0, 
                                 max_value=20.0, 
                                 value=float(config['default_expected_return']),
