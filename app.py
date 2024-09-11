@@ -86,7 +86,7 @@ def input_page():
             kid_age = st.number_input(f'Age of Kid {i+1}', value=st.session_state.personal_info['kids_ages'][i] if i < len(st.session_state.personal_info['kids_ages']) else 0, min_value=0, max_value=30)
             kids_ages.append(kid_age)
         with col2:
-            edu_start_age = st.number_input(f'Education Start Age for Kid {i+1}', value=st.session_state.personal_info['education_start_ages'][i] if i < len(st.session_state.personal_info['education_start_ages']) else 18, min_value=kid_age, max_value=30)
+            edu_start_age = st.number_input(f'Higher Education Start Age for Kid {i+1}', value=st.session_state.personal_info['education_start_ages'][i] if i < len(st.session_state.personal_info['education_start_ages']) else 18, min_value=kid_age, max_value=30)
             education_start_ages.append(edu_start_age)
 
     st.session_state.personal_info = {
