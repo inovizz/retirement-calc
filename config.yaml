@@ -1,0 +1,52 @@
+# Financial Planning Configuration
+
+# Current Savings
+current_savings:
+  Stocks: 1200000.0
+  Mutual Funds: 500000.0
+  ESOPs: 300000.0
+  EPF: 600000.0
+  Gold Bond: 50000.0
+  Fixed Deposits: 400000.0
+  Other Savings: 25000.0
+
+# Monthly Income
+monthly_income: 125000.0
+
+# Monthly Breakdown
+monthly_breakdown:
+  - category: Living Expenses
+    amount: 35000.0
+  - category: Kids' School Fees
+    amount: 15000.0
+  - category: Home Loan EMIs
+    amount: 25000.0
+  - category: Retirement Savings
+    amount: 20000.0
+  - category: Kid-1 Education Saving
+    amount: 10000.0
+  - category: Short-Term Goals
+    amount: 5000.0
+  - category: Other Savings
+    amount: 5000.0
+
+# Corpus Projection
+corpus_projection:
+  - goal: Retirement
+    years: 27
+  - goal: Kid-1 Education Saving
+    years: 10
+
+# Personal Information
+personal_info:
+  current_age: 28
+  retirement_age: 55
+  num_kids: 1
+  kids_ages: [3]
+  education_start_ages: [18]
+
+# Default expected return
+default_expected_return: 10
+
+# Short-term goal duration
+short_term_goal_years: 5
