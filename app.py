@@ -3,7 +3,6 @@ import pandas as pd
 import numpy as np
 import yaml
 import plotly.graph_objs as go
-from datetime import date
 
 def calculate_corpus(monthly_contribution, years, annual_return, initial_amount=0):
     months = years * 12
@@ -16,29 +15,48 @@ def calculate_corpus(monthly_contribution, years, annual_return, initial_amount=
 with open('config.yaml', 'r') as file:
     config = yaml.safe_load(file)
 
-# Initialize session state
-if 'page' not in st.session_state:
-    st.session_state.page = 'input'
-if 'current_savings' not in st.session_state:
+def get_default_values():
+    return {
+        'current_savings': {category: 0.0 for category in ['Stocks', 'Mutual Funds', 'ESOPs', 'EPF', 'Gold Bond', 'Fixed Deposits', 'Other Savings']},
+        'monthly_income': 0.0,
+        'monthly_breakdown': [
+            {'category': category, 'amount': 0.0}
+            for category in ['Living Expenses', 'Home Loan EMIs', 'Retirement Savings', 'Short-Term Goals', 'Other Savings']
+        ],
+        'personal_info': {
+            'current_age': 30,
+            'retirement_age': 60,
+            'num_kids': 0,
+            'kids_ages': [],
+            'education_start_ages': []
+        },
+        'page': 'input'
+    }
+
+# Initialize session state with default values
+if 'initialized' not in st.session_state:
+    default_values = get_default_values()
+    for key, value in default_values.items():
+        if key not in st.session_state:
+            st.session_state[key] = value
+    st.session_state.initialized = True
+
+def reset_to_default():
+    default_values = get_default_values()
+    for key, value in default_values.items():
+        st.session_state[key] = value
+
+def load_data_from_yaml():
     st.session_state.current_savings = {k: float(v) for k, v in config['current_savings'].items()}
-if 'monthly_income' not in st.session_state:
     st.session_state.monthly_income = float(config['monthly_income'])
-if 'monthly_breakdown' not in st.session_state:
     st.session_state.monthly_breakdown = [
         {'category': item['category'], 'amount': float(item['amount'])}
         for item in config['monthly_breakdown']
     ]
-if 'personal_info' not in st.session_state:
-    st.session_state.personal_info = {
-        'current_age': 30,
-        'retirement_age': 60,
-        'num_kids': 2,
-        'kids_ages': [5, 3],
-        'education_start_ages': [18, 18]
-    }
+    st.session_state.personal_info = config.get('personal_info', get_default_values()['personal_info'])
 
 def input_page():
-    st.title('Financial Information Input')
+    st.title('Retirement Corpus Calculator')
 
     # Load and Reset buttons
     col1, col2 = st.columns(2)
@@ -149,38 +167,6 @@ def input_page():
     if st.button('Proceed to Calculations'):
         st.session_state.page = 'calculation'
         st.rerun()
-        
-def load_data_from_yaml():
-    with open('config.yaml', 'r') as file:
-        config = yaml.safe_load(file)
-    st.session_state.current_savings = {k: float(v) for k, v in config['current_savings'].items()}
-    st.session_state.monthly_income = float(config['monthly_income'])
-    st.session_state.monthly_breakdown = [
-        {'category': item['category'], 'amount': float(item['amount'])}
-        for item in config['monthly_breakdown']
-    ]
-    st.session_state.personal_info = config.get('personal_info', {
-        'current_age': 30,
-        'retirement_age': 60,
-        'num_kids': 2,
-        'kids_ages': [5, 3],
-        'education_start_ages': [18, 18]
-    })
-
-def reset_to_default():
-    st.session_state.current_savings = {category: 0.0 for category in ['Stocks', 'Mutual Funds', 'ESOPs', 'EPF', 'Gold Bond', 'Fixed Deposits', 'Other Savings']}
-    st.session_state.monthly_income = 0.0
-    st.session_state.monthly_breakdown = [
-        {'category': category, 'amount': 0.0}
-        for category in ['Living Expenses', 'Home Loan EMIs', 'Retirement Savings', 'Short-Term Goals', 'Other Savings']
-    ]
-    st.session_state.personal_info = {
-        'current_age': 30,
-        'retirement_age': 60,
-        'num_kids': 0,
-        'kids_ages': [],
-        'education_start_ages': []
-    }
 
 def calculation_page():
     st.title('Financial Projections')
